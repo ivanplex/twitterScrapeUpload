@@ -51,6 +51,3 @@ def scrapeByTheHour(request):
 
     df.to_csv('/tmp/blob.csv')
     uploadToGCS('g09-datasets', '/tmp/blob.csv', 'twitter/crawl/2020_02_04.csv')
-
-
-scrapeByTheHour(None)
