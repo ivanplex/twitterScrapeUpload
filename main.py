@@ -30,24 +30,44 @@ def uploadToGCS(bucket_name, source_file_name, destination_blob_name):
         )
     )
 
-def scrapeByTheHour(request):
+def scrapeByTheHour(request=None, limit=None):
     print("Begin scanning for tweets related to "+ "vodafone"+ ": "+ str(dt.datetime.now()))
-    list_of_tweets = query_tweets("vodafone", limit=None, begindate=dt.date(2020,2,4), enddate=dt.date(2020,2,5))
+    list_of_tweets = query_tweets("vodafone", limit=limit, begindate=dt.date(2020,2,4), enddate=dt.date(2020,2,5))
     print("Scanning complete: "+ str(dt.datetime.now()))
-    df = pd.DataFrame(columns=['id', 'user_id', 'body', 'timestamp'])
+    df = pd.DataFrame(columns=['id', 'tweet_url', 'timestamp', 'timestamp_epochs', 'user_id', 'username', 'user_screen_name', 'body', 'body_html' ,'body_links', 'body_hashtags', 'action_likes', 'action_retweets', 'action_replies', 'action_is_replied', 'action_is_reply_to', 'action_parent_tweet_id', 'action_reply_to_users'])
 
     for tweet in list_of_tweets:
-        lang = detect(tweet.text)
-        if lang == 'en':
-            df = df.append(
-                {
-                'id':       tweet.tweet_id,
-                'user_id':  tweet.user_id,
-                'body':     tweet.text,
-                'timestamp':tweet.timestamp,
-                },
-                ignore_index=True
-            )
+        try:
+            lang = detect(tweet.text)
+            if lang == 'en':
+                df = df.append(
+                    {
+                    'id':                       tweet.tweet_id,
+                    'tweet_url':                tweet.tweet_url,
+                    'timestamp':                tweet.timestamp,
+                    'timestamp_epochs':         tweet.timestamp_epochs,
+
+                    'user_id':                  tweet.user_id,
+                    'username':                 tweet.username,
+                    'user_screen_name':         tweet.screen_name,
+
+                    'body':                     tweet.text,
+                    'body_html':                tweet.text_html,
+                    'body_links':               tweet.links,
+                    'body_hashtags':            tweet.hashtags,
+
+                    'action_likes':             tweet.likes,
+                    'action_retweets':          tweet.retweets,
+                    'action_replies':           tweet.replies,
+                    'action_is_replied':        tweet.is_replied,
+                    'action_is_reply_to':       tweet.is_reply_to,
+                    'action_parent_tweet_id':   tweet.parent_tweet_id,
+                    'action_reply_to_users':    tweet.reply_to_users,
+                    },
+                    ignore_index=True
+                )
+        except:
+            print("Error detecting lang: "+tweet.text)
 
     df.to_csv('/tmp/blob.csv')
     uploadToGCS('g09-datasets', '/tmp/blob.csv', 'twitter/crawl/2020_02_04.csv')
