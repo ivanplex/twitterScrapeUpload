@@ -32,7 +32,7 @@ def uploadToGCS(bucket_name, source_file_name, destination_blob_name):
 
 def scrapeByTheHour(request):
     print("Begin scanning for tweets related to "+ "vodafone"+ ": "+ str(dt.datetime.now()))
-    list_of_tweets = query_tweets("vodafone", 10, begindate=dt.date(2020,2,4), enddate=dt.date(2020,2,5))
+    list_of_tweets = query_tweets("vodafone", limit=None, begindate=dt.date(2020,2,4), enddate=dt.date(2020,2,5))
     print("Scanning complete: "+ str(dt.datetime.now()))
     df = pd.DataFrame(columns=['id', 'user_id', 'body', 'timestamp'])
 
