@@ -13,9 +13,6 @@ def uploadToGCS(bucket_name, source_file_name, destination_blob_name):
     Taken from example:
     https://cloud.google.com/storage/docs/uploading-objects#storage-upload-object-code-sample
     """
-    # bucket_name = "your-bucket-name"
-    # source_file_name = "local/path/to/file"
-    # destination_blob_name = "storage-object-name"
 
     print("Preparing to upload.")
     storage_client = storage.Client()
@@ -30,11 +27,11 @@ def uploadToGCS(bucket_name, source_file_name, destination_blob_name):
         )
     )
 
-def scrapeByTheHour(start, end, filename, limit=None):
+def scrapeByTheHour(searchTerm, start, end, filename, limit=None):
     print("Begin scanning for tweets related to "+ "vodafone"+ ": "+ str(dt.datetime.now()))
-    list_of_tweets = query_tweets("vodafone", limit=limit, begindate=start, enddate=end)
+    list_of_tweets = query_tweets(searchTerm, limit=limit, begindate=start, enddate=end)
     print("Scanning complete: "+ str(dt.datetime.now()))
-    df = pd.DataFrame(columns=['id', 'tweet_url', 'timestamp', 'timestamp_epochs', 'user_id', 'username', 'user_screen_name', 'body', 'body_html' ,'body_links', 'body_hashtags', 'body_lang', 'action_likes', 'action_retweets', 'action_replies', 'action_is_replied', 'action_is_reply_to', 'action_parent_tweet_id', 'action_reply_to_users'])
+    df = pd.DataFrame(columns=['id', 'tweet_url', 'timestamp', 'timestamp_epochs', 'search_term', 'user_id', 'username', 'user_screen_name', 'body', 'body_html' ,'body_links', 'body_hashtags', 'body_lang', 'action_likes', 'action_retweets', 'action_replies', 'action_is_replied', 'action_is_reply_to', 'action_parent_tweet_id', 'action_reply_to_users'])
 
     for tweet in list_of_tweets:
         try:
@@ -45,6 +42,8 @@ def scrapeByTheHour(start, end, filename, limit=None):
                 'tweet_url':                tweet.tweet_url,
                 'timestamp':                tweet.timestamp,
                 'timestamp_epochs':         tweet.timestamp_epochs,
+
+                'search_term':              searchTerm,
 
                 'user_id':                  tweet.user_id,
                 'username':                 tweet.username,
