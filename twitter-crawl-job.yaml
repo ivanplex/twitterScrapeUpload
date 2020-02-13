@@ -3,13 +3,12 @@ kind: CronJob
 metadata:
   name: twitter-crawl
 spec:
-  schedule: "*/15 * * * *"
+  schedule: "*/5 * * * *"
   jobTemplate:
     spec:
       template:
         spec:
           containers:
           - name: crawl
-            image: eu.gcr.io/cogniflare-rd/twitter-crawl:latest
-            imagePullPolicy: "Always"
+            image: eu.gcr.io/cogniflare-rd/twitter-crawl:v1.1.0
           restartPolicy: OnFailure
