@@ -23,7 +23,7 @@ class LogDB:
             `crawl_end` timestamp NULL DEFAULT NULL,
             `context` text,
             `success` boolean,
-            `length` int(11) NOT NULL DEFAULT 0,
+            `length` int(11) NOT NULL DEFAULT '0',
             PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         """
@@ -93,9 +93,9 @@ class TwitterLogDB(LogDB):
         val = (start_date, end_date, dt.datetime.now(), context, False)
         return self.insertRow(sql, val)
 
-    def endCrawl(self, id, length):
+    def endCrawl(self, id, resultLength):
         sql = "UPDATE twitter_log SET success='1', crawl_end=%s, length=%s WHERE id=%s"
-        val = (dt.datetime.now(), id, length)
+        val = (dt.datetime.now(), resultLength, id)
         return self.updateRow(sql, val)
 
     def earliestQuery(self):
