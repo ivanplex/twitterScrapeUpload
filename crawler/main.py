@@ -71,4 +71,4 @@ def scrapeByTheHour(searchTerm, start, end, filename, limit=None):
 
     df.to_csv('/tmp/blob.csv')
     uploadToGCS('g09-datasets', '/tmp/blob.csv', filename)
-    return len(df.index)
+    return df.shape[0]
