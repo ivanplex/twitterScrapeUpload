@@ -10,5 +10,6 @@ spec:
         spec:
           containers:
           - name: crawl
+            imagePullPolicy: Always
             image: eu.gcr.io/cogniflare-rd/twitter-crawl:v1.1.0
           restartPolicy: OnFailure

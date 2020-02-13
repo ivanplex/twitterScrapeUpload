@@ -25,7 +25,7 @@ context = 'vodafone'
 success, logID = logDB.startCrawl(startDate, endDate, context)
 
 filename='twitter/crawl/'+str(startDate)+'.csv'
-resultLength = scrapeByTheHour(searchTerm=context, limit=10, start=startDate, end=endDate, filename=filename)
+resultLength = scrapeByTheHour(searchTerm=context, limit=None, start=startDate, end=endDate, filename=filename)
 
 # Mark end time on logging DB
 logDB.endCrawl(logID, resultLength)
