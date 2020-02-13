@@ -1,7 +1,6 @@
 from main import scrapeByTheHour
 from db import TwitterLogDB
 from datetime import date, timedelta
-import pymysql
 import os
 
 # Used by Google Cloud storage
