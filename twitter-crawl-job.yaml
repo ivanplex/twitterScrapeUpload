@@ -11,4 +11,5 @@ spec:
           containers:
           - name: crawl
             image: eu.gcr.io/cogniflare-rd/twitter-crawl:latest
+            imagePullPolicy: "Always"
           restartPolicy: OnFailure
