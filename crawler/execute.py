@@ -10,7 +10,7 @@ os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "crawler-service-account.key.json
 # Logging DB
 # Crawl task data goes here
 ##
-logDB = TwitterLogDB(host='104.196.70.209', user='k8s', password='', db='twitter', tablename='twitter_log')
+logDB = TwitterLogDB(host='104.196.153.172', user='k8s', password='g09aintgotnosecret', db='twitter', tablename='twitter_log')
 
 # Evaluate crawl period
 endDate = logDB.earliestQuery()
