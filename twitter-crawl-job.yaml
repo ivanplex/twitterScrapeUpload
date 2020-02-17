@@ -9,7 +9,7 @@ spec:
       template:
         spec:
           containers:
-          - name: crawl
+          - name: twitter-crawler
             imagePullPolicy: Always
             image: eu.gcr.io/cogniflare-rd/twitter-crawl:v1.1.0
           restartPolicy: OnFailure
